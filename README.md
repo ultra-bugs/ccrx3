@@ -1,4 +1,4 @@
-# CRX3-Creator
+# CCRX3 [CRX3-Creator]
 
 Python script for building google chrome extension crx3 package.
 It is inspired by https://github.com/bellbind/crxmake-python.
