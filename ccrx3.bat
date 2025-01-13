@@ -3,22 +3,25 @@ setlocal enabledelayedexpansion
 
 set "PBIN="
 
-REM Check each Python binary
+:: Check each Python binary by trying to execute a simple Python command
 for %%i in (python3 python py) do (
-    where %%i >nul 2>nul
+    %%i -c "print('test')" >nul 2>nul
     if !errorlevel! equ 0 (
         set "PBIN=%%i"
         goto :found
     )
 )
 
-REM Check PYTHON_RUNTIME_BIN environment variable
+:: Check PYTHON_RUNTIME_BIN environment variable
 if defined PYTHON_RUNTIME_BIN (
-    set "PBIN=%PYTHON_RUNTIME_BIN%"
-    goto :found
+    %PYTHON_RUNTIME_BIN% -c "print('test')" >nul 2>nul
+    if !errorlevel! equ 0 (
+        set "PBIN=%PYTHON_RUNTIME_BIN%"
+        goto :found
+    )
 )
 
-echo Python not found in PATH and PYTHON_RUNTIME_BIN is not set
+echo No valid Python installation found in PATH or PYTHON_RUNTIME_BIN
 exit /b 1
 
 :found
